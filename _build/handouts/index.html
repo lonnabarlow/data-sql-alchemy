@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>SQLAlchemy Skills | Devmountain Foundations</title>
+
+      <link
+        href="_static/pygments.css"
+        rel="stylesheet"
+        type="text/css"
+      />
+      <link href="_static/devmountain.css" rel="stylesheet" type="text/css" />
+          <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+          <link rel="stylesheet" type="text/css" href="_static/devmountain.css" />
+          <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+          <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+
+      <script src="_static/pdfobject.min.js"></script>
+      
+  </head>
+  <body>
+      <div id="handouts-container">
+        <header id="page-header">
+            <p id="project-title">Devmountain Foundations</p>
+            <p id="page-title">SQLAlchemy Skills</p>
+              <p id="backlink">
+                <a href="/"> &laquo; Back to Homepage </a>
+              </p>
+        </header>
+
+        <nav id="page-toc"><ul>
+<li><a class="reference internal" href="#">SQLAlchemy Skills</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li><a class="reference internal" href="#purpose">Purpose</a></li>
+<li><a class="reference internal" href="#background">Background</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#instructions">Instructions</a><ul>
+<li><a class="reference internal" href="#code-setup">Code Setup</a></li>
+<li><a class="reference internal" href="#database-setup">Database Setup</a></li>
+<li><a class="reference internal" href="#part-1-compose-orm">Part 1: Compose ORM</a></li>
+<li><a class="reference internal" href="#part-2-sqlalchemy-queries">Part 2: SQLAlchemy Queries</a></li>
+<li><a class="reference internal" href="#part-3-write-functions">Part 3: Write Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+
+        <main id="page-content">
+            <section class="section" id="sqlalchemy-skills">
+<h1>SQLAlchemy Skills</h1>
+<section class="section" id="introduction">
+<h2>Introduction</h2>
+<section class="section" id="purpose">
+<h3>Purpose</h3>
+<p>SQLAlchemy Skills is meant to help you practice and assess your understanding of
+the SQLAlchemy ORM. You’ll be setting up a remote database and connecting to it
+using SQLAlchemy.</p>
+</section>
+<section class="section" id="background">
+<h3>Background</h3>
+<p>Your friend, Alicia, has decided to start a petsitting business, and she’s going to use
+SQLAlchemy to query her database that contains her human customers and their animals.</p>
+</section>
+</section>
+<section class="section" id="instructions">
+<h2>Instructions</h2>
+<section class="section" id="code-setup">
+<h3>Code Setup</h3>
+<ol class="arabic simple">
+<li><p>Download the materials for this exercise from Frodo.</p></li>
+<li><p>Make a virtual environment, and install the requirements.</p></li>
+</ol>
+<pre class="console literal-block">$ <span class="cmd">virtualenv</span> <span class="cmd">env</span>
+$ <span class="cmd">source env/bin/activate</span>
+$ <span class="cmd">pip3</span> <span class="cmd">install -r requirements.txt</span></pre>
+<p>Reminder: in Windows, make sure you use the command:</p>
+<pre class="console literal-block">$ virtualenv env --always-copy</pre>
+<p>to create a new virtual environment.</p>
+</section>
+<section class="section" id="database-setup">
+<h3>Database Setup</h3>
+<p>You’ll need to set up tables on a remote Heroku database. If you have an existing URI,
+feel free to use that. If not, follow the instructions below to create a new database. You
+can add a database onto an existing project, or create a new project and a new database in it.
+Heroku allows for only 5 free projects/apps, but you can have multiple database instances within
+a single app.</p>
+<p><strong>Add on to an existing Heroku project</strong></p>
+<ol class="arabic simple">
+<li><p>In your Heroku account, head to an existing database project from your dashboard. You’ll know you’re on the right view if your URL looks something like this: <code class="docutils literal notranslate"><span class="pre">https://dashboard.heroku.com/apps/app-name</span></code>.</p></li>
+<li><p>Part way down on the left hand side of the page should be a section labeled <cite>Installed add-ons</cite> and a link to <cite>Configure Add-ons</cite> – click on that link.</p></li>
+<li><p>In the body of this page, there should be a <cite>Heroku Postgres</cite> add-on already from a previous project, we’ll add another using the search bar directly above the add-on.</p></li>
+<li><p>Search for <cite>Heroku Postgres</cite> and click on the add-on that pops up. You now have two database instances in this one project! Heroku will automatically name them, so keep track of what data you’re keeping in which database.</p></li>
+<li><p>Click on the <cite>Heroku Postgres</cite> link of the database you want to use.</p></li>
+<li><p>On its page, click over to the <cite>Settings</cite> tab and then click the <cite>View Credentials</cite> button.</p></li>
+<li><p>You should now be able to view your URI. Copy it now and paste it in 2 places. 1) In <cite>model.py</cite> in the <code class="docutils literal notranslate"><span class="pre">connect_to_db</span></code> function and 2) in SQL Tabs.</p></li>
+</ol>
+<p>The instructions for setting up the tables are below the <cite>Create a new Heroku project</cite> section.</p>
+<p><strong>Create a new Heroku project</strong></p>
+<ol class="arabic simple">
+<li><p>In your Heroku account, click the <cite>New</cite> button and then <cite>Create new app</cite> in the dropdown.</p></li>
+<li><p>Give your app a name and click the <cite>Create app</cite> button.</p></li>
+<li><p>Part way down on the left hand side of the page should be a section labeled <cite>Installed add-ons</cite> and a link to <cite>Configure Add-ons</cite> – click on that link.</p></li>
+<li><p>In the body of this page, there should be a search bar. Using that search bar, search for <cite>Heroku Postgres</cite> and click on the add-on that pops up.</p></li>
+<li><p>Click on the <cite>Heroku Postgres</cite> link that is now below the search bar. This will take you to a page of information about your database.</p></li>
+<li><p>On its page, click over to the <cite>Settings</cite> tab and then click the <cite>View Credentials</cite> button.</p></li>
+<li><p>You should now be able to view your URI. Copy it now and paste it in 2 places. 1) In <cite>model.py</cite> in the <code class="docutils literal notranslate"><span class="pre">connect_to_db</span></code> function and 2) in SQL Tabs.</p></li>
+</ol>
+<p><strong>Setting up your tables</strong></p>
+<p>Your database should have two tables: <strong>Humans</strong> and <strong>Animals</strong>. An animal belongs to
+only one human, but a human can have many animals. Alicia already has some humans and
+animals in a database, and that information is stored in <cite>seed.sql</cite> so you can copy it
+over to your database.</p>
+<ol class="arabic simple">
+<li><p>Open SQL Tabs (or a similar app) and paste in your URI. Don’t forget to add <code class="docutils literal notranslate"><span class="pre">?ssl-true</span></code> at the end.</p></li>
+<li><p>Read over the contents of <cite>seed.sql</cite> to get an idea of what you’re working with.</p></li>
+<li><p>Copy and paste the queries from <cite>seed.sql</cite> into SQL Tabs. Now you have all of Alicia’s existing data and can interact with it by accessing the database through its URI.</p></li>
+</ol>
+</section>
+<section class="section" id="part-1-compose-orm">
+<h3>Part 1: Compose ORM</h3>
+<p>Using SQLAlchemy, uncomment the classes and fill in the columns for the classes
+already defined in <cite>model.py</cite>. The column names and data types should be the
+same as those in your database. (Since you already have tables, there
+is no need to run the command <code class="docutils literal notranslate"><span class="pre">db.create_all()</span></code> at any point during this
+assignment.)</p>
+</section>
+<section class="section" id="part-2-sqlalchemy-queries">
+<h3>Part 2: SQLAlchemy Queries</h3>
+<p>Please compose the following queries, using an interactive Python terminal
+to test them as you go along. Add your SQLAlchemy queries to the file called
+<cite>query.py</cite>.</p>
+<ol class="arabic simple">
+<li><p>Get the human with the id 2.</p></li>
+<li><p>Get the <em>first</em> animal with the species ‘fish’</p></li>
+<li><p>Get all of the animals for the human with the id 5 and the animal species ‘dog’</p></li>
+<li><p>Get all the animals that were born after 2015 (do not include animals without birth years).</p></li>
+<li><p>Find the humans with first names that start with ‘J’</p></li>
+<li><p>Find all the animals without birth years in the database.</p></li>
+<li><p>Find all animals that are either fish or rabbits</p></li>
+<li><p>Find all the humans whose email addresses do not contain ‘gmail’</p></li>
+</ol>
+<p>Helper commands:</p>
+<p>To open an interactive terminal in order to test queries:</p>
+<pre class="console literal-block"> $ <span class="cmd">python3</span> <span class="cmd">-i model.py</span></pre>
+</section>
+<section class="section" id="part-3-write-functions">
+<h3>Part 3: Write Functions</h3>
+<p>Fill in the stubbed out functions found in <cite>query.py</cite>. The description of
+what each function should do is above each function stub.</p>
+<p><strong>When you’re done, push your code to GitHub.</strong></p>
+</section>
+</section>
+</section>
+
+        </main>
+
+        <footer id="page-footer">
+            <p>&copy; 2022 Devmountain</p>
+        </footer>
+      </div>
+
+      <script src="_static/main.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+  </body>
+</html>
